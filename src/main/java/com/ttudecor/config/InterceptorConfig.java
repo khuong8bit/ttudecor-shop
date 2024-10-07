@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ttudecor.interceptor.AdminInterceptor;
+import com.ttudecor.interceptor.InterceptorForAPI;
 import com.ttudecor.interceptor.ProfileInterceptor;
 import com.ttudecor.interceptor.RememberInterceptor;
 
@@ -21,6 +22,10 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Autowired
 	private RememberInterceptor rememberInterceptor;
 	
+	@Autowired
+	private InterceptorForAPI interceptorForAPI;
+	
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(rememberInterceptor)
@@ -29,6 +34,8 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		registry.addInterceptor(adminInterceptor).addPathPatterns("/ttu-admin/**");
 		
 		registry.addInterceptor(profileInterceptor).addPathPatterns("/profile/**");
+		
+		registry.addInterceptor(interceptorForAPI).addPathPatterns("/api/**").excludePathPatterns("/api/login");
 	}
 	
 }
